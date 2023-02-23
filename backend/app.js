@@ -40,4 +40,26 @@ app.post("/auth/register", (req, res) => {
   );
 });
 
+app.post("/auth/login", (req, res) => {
+  let loginData = req.body;
+  conn.query(
+    "SELECT * from users WHERE username = ? AND password=?",
+    [loginData.username, loginData.password],
+    (err, rows) => {
+      if (err) {
+        console.log("Login went wrong");
+        res.status(400);
+        res.json(err);
+      }
+      if (rows.length == 1) {
+        res.status(200);
+        res.json({ message: "Login successful" });
+      } else {
+        res.status(400);
+        res.json({ message: "Login unsuccessful" });
+      }
+    }
+  );
+});
+
 module.exports = app;

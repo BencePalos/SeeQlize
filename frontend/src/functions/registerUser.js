@@ -9,5 +9,7 @@ export async function registerUser(regData) {
   });
   let res = await response.json();
 
-  return res;
+  if (response.status != 200) {
+    alert("Something went wrong");
+  } else return res;
 }
