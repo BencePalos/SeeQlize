@@ -1,0 +1,11 @@
+.mainNav {
+  background-color: rgb(109, 84, 143);
+  display: flex;
+  gap: 3vw;
+}
+
+.navLinks {
+  display: flex;
+  gap: 3vw;
+  list-style: none;
+}

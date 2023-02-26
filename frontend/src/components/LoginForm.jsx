@@ -11,7 +11,9 @@ function LoginForm() {
     };
 
     let response = await loginUser(loginData);
-    if (response) navigate("/");
+    if (response) {
+      localStorage.setItem("id", response.id), navigate("/");
+    }
   }
 
   return (

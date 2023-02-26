@@ -53,13 +53,18 @@ app.post("/auth/login", (req, res) => {
       }
       if (rows.length == 1) {
         res.status(200);
-        res.json({ message: "Login successful" });
+        res.json({ message: "Login successful", id: rows[0].id });
       } else {
         res.status(400);
         res.json({ message: "Login unsuccessful" });
       }
     }
   );
+});
+
+app.get("/projects", (req, res) => {
+  let userID = req.header("userID");
+  res.json({ name: "dummyproject", id: 2 });
 });
 
 module.exports = app;
