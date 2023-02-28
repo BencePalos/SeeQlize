@@ -78,4 +78,10 @@ app.get("/projects", (req, res) => {
   );
 });
 
+app.post("/project", (req, res) => {
+  console.log(req.body);
+  conn.query();
+  res.json({ message: "ok" });
+});
+
 module.exports = app;

@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import Select from "react-select";
 
 function ProjectSelector() {
   const [projects, setProjects] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     async function fetchProjects() {
       let projectsData = await fetch("http://127.0.0.1:8080/projects", {
@@ -22,12 +25,19 @@ function ProjectSelector() {
     (e, i) => (options[i] = { value: e.project_name, label: e.project_name })
   );
 
-  console.log(options);
-
   return projects ? (
-    <div className="projectsDropdown">
-      <Select options={options} placeholder="Select a project" />
-    </div>
+    <>
+      <div className="projectsDropdown">
+        <Select options={options} placeholder="Select a project" />
+      </div>
+      <button
+        onClick={() => {
+          navigate("/newProject");
+        }}
+      >
+        Add new project
+      </button>
+    </>
   ) : (
     "Projects loading"
   );

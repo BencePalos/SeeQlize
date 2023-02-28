@@ -5,16 +5,31 @@ import { projectJSONcreator } from "../functions/projectJSONcreator";
 function AddNewProject() {
   const [tableCount, setTableCount] = useState([1]);
   const [projectName, setProjectName] = useState("");
+  const userID = localStorage.getItem("id");
 
   function addNewTable() {
     setTableCount([...tableCount, 1]);
     console.log(tableCount);
   }
 
-  function handleNewProject(e) {
+  async function handleNewProject(e) {
     e.preventDefault();
+    if (!userID) {
+      alert("Please log in");
+      return;
+    }
+    console.log(userID);
     let data = document.querySelectorAll('div[class*="table"]');
     let projectAsJSON = projectJSONcreator(data, projectName);
+    let response = await fetch("http://127.0.0.1:8080/project", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        id: userID,
+      },
+      body: JSON.stringify(projectAsJSON),
+    });
+    let res = await response.json();
   }
 
   function handleProjectName(e) {

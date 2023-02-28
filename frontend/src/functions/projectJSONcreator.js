@@ -1,4 +1,4 @@
-export async function projectJSONcreator(projectData, projectName) {
+export function projectJSONcreator(projectData, projectName) {
   let newProjectJSON = { projectName: projectName };
   projectData.forEach((table, index) => {
     newProjectJSON["table" + index] = {
@@ -13,5 +13,6 @@ export async function projectJSONcreator(projectData, projectName) {
       }
     }
   });
-  console.log(newProjectJSON);
+  // console.log(newProjectJSON);
+  return newProjectJSON;
 }
