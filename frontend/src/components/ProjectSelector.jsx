@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Select from "react-select";
 
 function ProjectSelector() {
   const [projects, setProjects] = useState([]);
@@ -11,27 +12,21 @@ function ProjectSelector() {
         },
       });
       let allProjects = await projectsData.json();
-      setProjects([allProjects]);
-      console.log(projects);
+      setProjects(allProjects);
     }
     fetchProjects();
-    setTimeout(() => {
-      console.log(projects);
-    }, 1000);
   }, []);
+
+  const options = [];
+  projects.forEach(
+    (e, i) => (options[i] = { value: e.project_name, label: e.project_name })
+  );
+
+  console.log(options);
 
   return projects ? (
     <div className="projectsDropdown">
-      <select name="projects" defaultValue={"select a project"}>
-        <option disabled>Select a project</option>
-        {projects.map((e) => {
-          return (
-            <option key={e.id} value={e.name}>
-              {e.name}
-            </option>
-          );
-        })}
-      </select>
+      <Select options={options} />
     </div>
   ) : (
     "Projects loading"
