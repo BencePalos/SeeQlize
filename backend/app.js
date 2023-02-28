@@ -64,7 +64,18 @@ app.post("/auth/login", (req, res) => {
 
 app.get("/projects", (req, res) => {
   let userID = req.header("userID");
-  res.json({ name: "dummyproject", id: 2 });
+  conn.query(
+    "SELECT * from projects where user_id = ?",
+    [userID],
+    (err, rows) => {
+      if (err) {
+        console.log(err);
+        res.json({ error: "Something went wrong" });
+      } else {
+        res.json(rows);
+      }
+    }
+  );
 });
 
 module.exports = app;

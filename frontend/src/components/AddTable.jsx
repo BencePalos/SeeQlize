@@ -10,14 +10,10 @@ function AddTable(props) {
 
   return (
     <div className={`table${props.tableCount}`}>
-      <input
-        type="text"
-        name={`table${props.tableCount}name`}
-        placeholder="Table name"
-      />
+      <input type="text" name={`tablename`} placeholder="Table name" />
       <br />
       {columns.map((e, i) => {
-        return <AddColumn key={i} columns={columns.length} />;
+        return <AddColumn key={i} columns={i} />;
       })}
       <button onClick={addNewColumn}>Add new column</button>
       <br />
