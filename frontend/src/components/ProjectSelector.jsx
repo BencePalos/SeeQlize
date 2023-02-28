@@ -26,7 +26,7 @@ function ProjectSelector() {
 
   return projects ? (
     <div className="projectsDropdown">
-      <Select options={options} />
+      <Select options={options} placeholder="Select a project" />
     </div>
   ) : (
     "Projects loading"
