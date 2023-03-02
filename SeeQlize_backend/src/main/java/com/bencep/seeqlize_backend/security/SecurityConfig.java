@@ -6,8 +6,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Configuration
-@EnableWebSecurity
+@Configuration //add back @EnableWebSecurity
 public class SecurityConfig {
     @Bean
     PasswordEncoder passwordEncoder() {

@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
-    private static final String PW_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])$";
+    private static final String PW_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}$";
     private static final Pattern pattern = Pattern.compile(PW_PATTERN);
 
     @Autowired
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         }
         Matcher matcher = pattern.matcher(password);
         if (!matcher.matches()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password must contain a number, one upper-, and one lowercase character");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Password must be at 8-20 characters, contain a number, one upper-, and one lower-case character");
         }
         return true;
     }
@@ -60,10 +60,5 @@ public class UserServiceImpl implements UserService {
                 email
         );
         userRepository.save(userToSave);
-    }
-
-    @Override
-    public void validateLogin(User newUser) {
-
     }
 }
