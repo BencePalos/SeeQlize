@@ -1,5 +1,6 @@
 package com.bencep.seeqlize_backend.users.services;
 
+import com.bencep.seeqlize_backend.users.dtos.LoginDto;
 import com.bencep.seeqlize_backend.users.models.User;
 import com.bencep.seeqlize_backend.users.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,19 @@ public class UserServiceImpl implements UserService {
                 email
         );
         userRepository.save(userToSave);
+    }
+
+    @Override
+    public boolean validateLogin(LoginDto loginDto){
+        if(!userRepository.existsByUsername(loginDto.getUsername())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Incorrect credentials(username)");
+        }
+        User userToLogIn = userRepository.getUserByUsername(loginDto.getUsername());
+        if(!passwordEncoder.matches(loginDto.getPassword(), userToLogIn.getPassword())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect credentials(password)");
+        }
+
+        return true;
+
     }
 }

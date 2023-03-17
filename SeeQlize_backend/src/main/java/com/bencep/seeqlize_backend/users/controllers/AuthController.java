@@ -1,10 +1,12 @@
 package com.bencep.seeqlize_backend.users.controllers;
 
+import com.bencep.seeqlize_backend.users.dtos.LoginDto;
 import com.bencep.seeqlize_backend.users.models.User;
 import com.bencep.seeqlize_backend.users.repositories.UserRepository;
 import com.bencep.seeqlize_backend.users.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -26,9 +28,21 @@ public class AuthController {
     public ResponseEntity registerUser(@RequestBody User userToRegister){
         try{
             userService.validateRegistration(userToRegister);
-        }catch(ResponseStatusException err){
-            return ResponseEntity.status(400).body(err.getReason());
+            return ResponseEntity.ok("Registration successful");
+        }catch(ResponseStatusException ex){
+            return ResponseEntity.status(400).body(ex.getReason());
         }
-        return ResponseEntity.ok("Registration successful");
+
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity loginUser(@RequestBody LoginDto loginDto){
+        try {
+            userService.validateLogin(loginDto);
+            return ResponseEntity.ok("Login successful");
+        }catch(ResponseStatusException ex){
+            return ResponseEntity.status(400).body(ex.getReason());
+        }
+
     }
 }
