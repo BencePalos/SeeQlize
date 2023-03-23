@@ -1,6 +1,7 @@
 export function projectJSONcreator(projectData, projectName) {
   let newProjectJSON = { projectName: projectName };
   projectData.forEach((table, index) => {
+    console.log(table);
     newProjectJSON["table" + index] = {
       name: `${table.children[0].value}`,
       columns: {},
@@ -13,6 +14,6 @@ export function projectJSONcreator(projectData, projectName) {
       }
     }
   });
-  // console.log(newProjectJSON);
+  console.log(newProjectJSON);
   return newProjectJSON;
 }

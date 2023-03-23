@@ -15,7 +15,9 @@ function ProjectSelector() {
         },
       });
       let allProjects = await projectsData.json();
-      setProjects(allProjects);
+      projectsData.ok ? setProjects(allProjects) : alert("No projects found");
+
+      console.log(allProjects);
     }
     fetchProjects();
   }, []);

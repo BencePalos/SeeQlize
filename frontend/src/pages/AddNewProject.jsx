@@ -18,10 +18,10 @@ function AddNewProject() {
       alert("Please log in");
       return;
     }
-    console.log(userID);
+    // console.log(userID);
     let data = document.querySelectorAll('div[class*="table"]');
     let projectAsJSON = projectJSONcreator(data, projectName);
-    let response = await fetch("http://127.0.0.1:8080/project", {
+    let response = await fetch("http://127.0.0.1:8080/projects", {
       method: "POST",
       headers: {
         "content-type": "application/json",
