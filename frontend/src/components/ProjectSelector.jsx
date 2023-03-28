@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Select from "react-select";
+import ProjectDisplay from "./ProjectDisplay";
 
 function ProjectSelector() {
   const [projects, setProjects] = useState([]);
   const navigate = useNavigate();
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -22,15 +24,41 @@ function ProjectSelector() {
     fetchProjects();
   }, []);
 
+  const colourStyles = {
+    control: (styles) => ({ ...styles, backgroundColor: "white" }),
+    option: (styles, { data, isDisabled, isFocused, isSelected }) => {
+      return {
+        ...styles,
+        backgroundColor: "#6d548f",
+        color: "#FFF",
+        cursor: isDisabled ? "not-allowed" : "default",
+        textAlign: "center",
+      };
+    },
+  };
+
   const options = [];
   projects.forEach(
-    (e, i) => (options[i] = { value: e.project_name, label: e.project_name })
+    (e, i) =>
+      (options[i] = {
+        value: e.projectName,
+        label: e.projectName,
+      })
   );
 
-  return projects ? (
+  function handleProjectSelect(selectedOption) {
+    setSelectedProject(selectedOption.value);
+  }
+
+  return selectedProject == null ? (
     <>
       <div className="projectsDropdown">
-        <Select options={options} placeholder="Select a project" />
+        <Select
+          options={options}
+          placeholder="Select a project"
+          styles={colourStyles}
+          onChange={handleProjectSelect}
+        />
       </div>
       <button
         onClick={() => {
@@ -41,7 +69,24 @@ function ProjectSelector() {
       </button>
     </>
   ) : (
-    "Projects loading"
+    <>
+      <div className="projectsDropdown">
+        <Select
+          options={options}
+          placeholder="Select a project"
+          styles={colourStyles}
+          onChange={handleProjectSelect}
+        />
+      </div>
+      <button
+        onClick={() => {
+          navigate("/newProject");
+        }}
+      >
+        Add new project
+      </button>
+      <ProjectDisplay name={selectedProject} />
+    </>
   );
 }
 
