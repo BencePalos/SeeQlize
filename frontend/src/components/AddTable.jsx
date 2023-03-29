@@ -16,7 +16,9 @@ function AddTable(props) {
       {columns.map((e, i) => {
         return <AddColumn key={i} columns={i} />;
       })}
-      <button onClick={addNewColumn}>Add new column</button>
+      <button type="button" onClick={addNewColumn}>
+        Add new column
+      </button>
       <button className="removeTable" onClick={() => setInclude(false)}>
         Remove Table
       </button>

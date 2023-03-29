@@ -48,7 +48,9 @@ function AddNewProject() {
       {tableCount.map((e, i) => {
         return <AddTable key={i} tableCount={i + 1} />;
       })}
-      <button onClick={addNewTable}>Add new Table</button>
+      <button type="button" onClick={addNewTable}>
+        Add new Table
+      </button>
       <br />
       <button type="submit">Add project</button>
     </form>
