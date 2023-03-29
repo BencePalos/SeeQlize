@@ -20,7 +20,28 @@ function ProjectDisplay(props) {
     fetchProjectData();
   }, [props.name]);
 
-  return <div>{props.name}</div>;
+  return projectToDisplay ? (
+    <>
+      <h3>{projectToDisplay.projectName}</h3>
+      {projectToDisplay.tables.map((table, index) => {
+        return (
+          <div>
+            <p key={index}>{table.tableName}</p>
+            {table.columns.map((column, colIndex) => {
+              return (
+                <div key={colIndex}>
+                  <span>{column.columnName} </span>
+                  <span> type: {column.columnType}</span> <br />
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
+    </>
+  ) : (
+    "Project Loading"
+  );
 }
 
 export default ProjectDisplay;
