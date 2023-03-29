@@ -13,5 +13,6 @@ import java.util.List;
 @EnableJpaRepositories
 public interface ProjectsRepository extends JpaRepository<Project, Long> {
     List<Project> findAllByUserId(Long id);
+    Project findProjectByProjectName(String name);
 
 }

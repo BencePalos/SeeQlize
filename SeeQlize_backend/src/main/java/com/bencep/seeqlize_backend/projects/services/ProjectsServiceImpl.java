@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -55,5 +56,12 @@ public class ProjectsServiceImpl implements ProjectsService {
             return true;
         }
         return false; //missing implementation
+    }
+
+    @Override
+    public Project getAllInfoByName(String name){
+    Project project = projectsRepository.findProjectByProjectName(name);
+
+    return project;
     }
 }

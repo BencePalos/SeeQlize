@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,15 +54,21 @@ public class ProjectsController {
     @PostMapping
     public ResponseEntity addNewProject(@RequestBody ProjectDto projectDto, @RequestHeader(name = "id") Long id){
         projectDto.setUserID(id);
-//        System.out.println(projectDto.getTables().get(0).getTableName());
-//        System.out.println(projectDto.getTables().get(0).getColumns().get(0).getColumnName());
-//        System.out.println(projectDto.getProjectName());
-//        System.out.println(projectDto.getUserID());
         try{
             projectsService.saveNewProject(projectDto);
             return ResponseEntity.status(200).body(new ProjectResponseDto("Project saved"));
         }catch (ResponseStatusException ex){
-            return ResponseEntity.status(400).body(ex.getReason());
+            return ResponseEntity.status(400).body(new ErrorResponseDto(ex.getReason()));
+        }
+    }
+
+    @GetMapping("/{name}")
+    public ResponseEntity getProjectByName(@PathVariable String name){
+        try{
+            Project projectToReturn = projectsService.getAllInfoByName(name);
+            return ResponseEntity.ok(projectToReturn);
+        }catch (ResponseStatusException ex){
+            return ResponseEntity.status(400).body(new ErrorResponseDto(ex.getReason()));
         }
     }
 }
