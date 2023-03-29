@@ -1,12 +1,16 @@
 package com.bencep.seeqlize_backend.users.models;
 
+import com.bencep.seeqlize_backend.projects.models.Project;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+import java.util.List;
+
+@Entity(name = "user")
 @Table(name = "users")
 @Setter
 @Getter
@@ -32,4 +36,8 @@ public class User {
 
     @Column
     private String password;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy ="user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Project> projects;
 }
