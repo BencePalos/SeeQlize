@@ -10,6 +10,9 @@ export async function loginUser(loginData) {
   let loginRes = await response.json();
 
   if (response.status != 200) {
+    console.log(loginRes);
     alert("Something went wrong, please try again");
-  } else return loginRes;
+  } else {
+    return loginRes;
+  }
 }

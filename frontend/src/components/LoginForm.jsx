@@ -12,14 +12,15 @@ function LoginForm() {
 
     let response = await loginUser(loginData);
     if (response) {
-      localStorage.setItem("id", response.id), navigate("/");
+      console.log(response);
+      localStorage.setItem("id", response.userId), navigate("/");
     }
   }
 
   return (
     <form onSubmit={handleLogin}>
       <input type="text" name="username" placeholder="username" />
-      <input type="text" name="password" placeholder="password" />
+      <input name="password" placeholder="password" type="password" />
       <button type="submit">Login</button>
     </form>
   );

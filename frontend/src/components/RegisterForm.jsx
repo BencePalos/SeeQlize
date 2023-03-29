@@ -19,11 +19,17 @@ function RegisterForm() {
   return (
     <form onSubmit={handleRegister}>
       <input name="username" className="username" placeholder="username" />
-      <input name="password" className="password" placeholder="password" />
+      <input
+        name="password"
+        className="password"
+        placeholder="password"
+        type="password"
+      />
       <input
         name="passwordAgain"
         className="passwordRepeat"
         placeholder="repeat password"
+        type="password"
       />
       <input name="email" className="email" placeholder="email" />
       <button type="submit">Register</button>
