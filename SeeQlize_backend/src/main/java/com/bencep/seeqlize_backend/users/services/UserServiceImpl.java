@@ -64,7 +64,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean validateLogin(LoginDto loginDto) {
+    public Long validateLogin(LoginDto loginDto) {
+        if (loginDto.getPassword().isEmpty() && loginDto.getUsername().isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username and password are requires");
+        }
         if (!userRepository.existsByUsername(loginDto.getUsername())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect credentials(username)");
         }
@@ -72,8 +75,8 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(loginDto.getPassword(), userToLogIn.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect credentials(password)");
         }
-
-        return true;
+        User loggedInUser = userRepository.getUserByUsername(loginDto.getUsername());
+        return loggedInUser.getId();
 
     }
 }

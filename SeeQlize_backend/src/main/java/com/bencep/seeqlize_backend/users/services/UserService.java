@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
     public void validateRegistration(User newUser);
-    public boolean validateLogin(LoginDto loginDto);
+    public Long validateLogin(LoginDto loginDto);
 }

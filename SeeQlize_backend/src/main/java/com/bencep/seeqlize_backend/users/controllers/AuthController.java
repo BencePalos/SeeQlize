@@ -1,5 +1,8 @@
 package com.bencep.seeqlize_backend.users.controllers;
 
+import com.bencep.seeqlize_backend.common.ErrorResponseDto;
+import com.bencep.seeqlize_backend.common.LoginResponseDto;
+import com.bencep.seeqlize_backend.common.RegisterResponseDto;
 import com.bencep.seeqlize_backend.users.dtos.LoginDto;
 import com.bencep.seeqlize_backend.users.models.User;
 import com.bencep.seeqlize_backend.users.repositories.UserRepository;
@@ -28,9 +31,9 @@ public class AuthController {
     public ResponseEntity registerUser(@RequestBody User userToRegister){
         try{
             userService.validateRegistration(userToRegister);
-            return ResponseEntity.ok("Registration successful");
+            return ResponseEntity.ok(new RegisterResponseDto("Registration Successful"));
         }catch(ResponseStatusException ex){
-            return ResponseEntity.status(400).body(ex.getReason());
+            return ResponseEntity.status(400).body(new ErrorResponseDto(ex.getReason()));
         }
 
     }
@@ -38,10 +41,10 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity loginUser(@RequestBody LoginDto loginDto){
         try {
-            userService.validateLogin(loginDto);
-            return ResponseEntity.ok("Login successful");
+            Long loggedInUserId = userService.validateLogin(loginDto);
+            return ResponseEntity.ok(new LoginResponseDto("Login Successful", loggedInUserId));
         }catch(ResponseStatusException ex){
-            return ResponseEntity.status(400).body(ex.getReason());
+            return ResponseEntity.status(400).body(new ErrorResponseDto(ex.getReason()));
         }
 
     }

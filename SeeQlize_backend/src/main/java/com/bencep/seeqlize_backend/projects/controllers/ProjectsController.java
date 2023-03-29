@@ -53,12 +53,12 @@ public class ProjectsController {
     @PostMapping
     public ResponseEntity addNewProject(@RequestBody ProjectDto projectDto, @RequestHeader(name = "id") Long id){
         projectDto.setUserID(id);
-        System.out.println(projectDto.getTables().get(0).getTableName());
-        System.out.println(projectDto.getTables().get(0).getColumns().get(0).getColumnName());
-        System.out.println(projectDto.getProjectName());
-        System.out.println(projectDto.getUserID());
+//        System.out.println(projectDto.getTables().get(0).getTableName());
+//        System.out.println(projectDto.getTables().get(0).getColumns().get(0).getColumnName());
+//        System.out.println(projectDto.getProjectName());
+//        System.out.println(projectDto.getUserID());
         try{
-//            projectsService.saveNewProject(projectDto);
+            projectsService.saveNewProject(projectDto);
             return ResponseEntity.status(200).body(new ProjectResponseDto("Project saved"));
         }catch (ResponseStatusException ex){
             return ResponseEntity.status(400).body(ex.getReason());
